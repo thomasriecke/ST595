@@ -138,6 +138,26 @@ hist(beta0.prior <- exp(rnorm(100000, 0, 316.2278)))
 length(which(beta0.prior < 1))/length(beta0.prior)
 #    what might a better prior look like? What does beta0 represent in your own words?
 #
+# First, let's imagine we do have a pretty good idea what an alligator of average (5.7 ft)
+# weighs, and that's about 45 lbs...
+# we could back-transform this value to the real (-Inf, Inf) scale that our model 
+# will work on quite easily
+log(45)
+# so there's that number! 3.806662
+# 
+# now let's imagine we want some uncertainty around that, perhaps anywhere from 
+# 25 to 100 pounds as 95% credible intervals on the prior?
+hist(rlnorm(10000, log(45), 1)) # too broad
+hist(rlnorm(10000, log(45), 0.01)) # way too informative :)
+hist(rlnorm(10000, log(45), 0.1))  # maybe too informative?
+hist(rlnorm(10000, log(45), 0.25)) # not so bad
+# we could even use what we know about the median and variance of a log-normal
+# to try to pick values that would correspond to our desired prior?
+# https://en.wikipedia.org/wiki/Log-normal_distribution
+#
+#
+#
+#
 # 2) What about our prior for beta1? What does that represent, are all of these values
 #    reasonable? How might we modify this prior to be more reflective of our 
 #    expectations and prior knowledge rather than an incredibly vague statement
